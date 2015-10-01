@@ -33,17 +33,26 @@ names =
 
 class Skip
   (@number) ->
-    @years = [1989 to 2014].map ->
+    @years = [1989 to 2014].map (year) ->
+      year: year
       falls: []
-    @yearsGrouped = [1989 to 2014 by 5].map ->
+    @yearsGrouped = [1989 to 2014 by 4].map (year) ->
+      year: year
       falls: []
     @fallsSum = 0
     @name = names[@number]
 
   addFall: (year, data) ->
     @years[year - 1989].falls.push data
-    @yearsGrouped[Math.floor (year - 1989) / 5].falls.push data
+    @yearsGrouped[Math.floor (year - 1989) / 4].falls.push data
     @fallsSum++
+
+  init: ->
+    for year in @years
+      year.count = year.falls.length
+    for year in @yearsGrouped
+      year.count = year.falls.length
+    @yearsGrouped[*-1].count *= 2
 
 ig.getData = ->
   skipsAssoc = {}
@@ -68,4 +77,6 @@ ig.getData = ->
     row
 
   skips.sort (a, b) -> b.fallsSum - a.fallsSum
+  for skip in skips
+    skip.init!
   skips

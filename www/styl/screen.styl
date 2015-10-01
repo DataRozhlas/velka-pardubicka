@@ -5,4 +5,33 @@
 .ig
   @import basics
 .ig
-  background yellow
+  svg
+    path
+      fill none
+      stroke #6
+      stroke-width 1
+      &:nth-child(1)
+        stroke #d9d9d9
+      &:nth-child(2)
+        stroke #bdbdbd
+      &:nth-child(3)
+        stroke #969696
+      &:nth-child(4)
+        stroke #737373
+      &:nth-child(5)
+        stroke #525252
+    .foreground
+      path
+        stroke ColorRed
+        stroke-width 2
+      text
+        font-weight 500
+        font-size 12px
+        fill darken(ColorRed, 20%)
+    .axis
+      line
+        shape-rendering crispEdges
+        stroke #a
+      text
+        font-size 11px
+        fill #6
