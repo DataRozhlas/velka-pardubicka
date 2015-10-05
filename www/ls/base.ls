@@ -1,5 +1,4 @@
 data = ig.getData!
-console.log data.0
 
 container = d3.select ig.containers.base
 
@@ -71,6 +70,8 @@ drawing.append \g .attr \class "axis x"
       ..attr \text-anchor \middle
       ..attr \y 17
 
+sidebar = new ig.Sidebar container
+
 highlight = (datum) ->
   foregroundG.selectAll \path .data [datum]
     ..enter!append \path
@@ -86,5 +87,7 @@ highlight = (datum) ->
     ..text ->
       ig.utils.formatNumber it.count / 4, 2
     ..attr \y -> -5 + yScale it.count
+  sidebar.highlight datum
 
+console.log data
 highlight data.0

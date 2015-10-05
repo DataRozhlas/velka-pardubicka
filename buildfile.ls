@@ -12,6 +12,8 @@ externalStyles =
 
 externalData =
   "data": "#__dirname/data/data.tsv"
+  "map":  "#__dirname/data/trat.geojson"
+  "jumps": "#__dirname/data/prekazky.csv"
 
 preferScripts = <[ utils.js postInit.js _loadData.js ../data.js init.js _loadExternal.js]>
 deferScripts = <[ geoUtils.js base.js ]>
