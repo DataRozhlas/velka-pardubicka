@@ -44,5 +44,4 @@ ig.getData = ->
       jumpsAssoc[jump.number] = jump
     else
       jumps[*-1].addCooords row
-
   {jumps, jumpsAssoc}

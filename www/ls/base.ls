@@ -21,7 +21,7 @@ drawing = svg.append \g
   ..attr \transform "translate(#{margin.left},#{margin.top})"
 
 yScale = d3.scale.linear!
-  ..domain [0 60]
+  ..domain [0 63]
   ..range [height, 0]
 
 xScale = d3.scale.linear!
