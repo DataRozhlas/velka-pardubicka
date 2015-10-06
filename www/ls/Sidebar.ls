@@ -29,18 +29,29 @@ class ig.Sidebar
     @content = @element.append \p
 
   drawMap: ->
+
     geojson = ig.data.map
     {width, height, projection} = ig.utils.geo.getFittingProjection do
       geojson.features
       190
     path = d3.geo.path!
       ..projection projection
-
+    symbol = d3.svg.symbol!
+      ..type \triangle-up
+    startCoords = projection geojson.features.0.geometry.coordinates.0.0
     @map = @element.append \svg
       ..attr \width width
-      ..attr \height height + 2
+      ..attr \height height + 12
+    @drawing = @map.append \g
+      ..attr \transform "translate(0, 10)"
       ..append \path
         ..attr \d path geojson.features.0.geometry
+      ..append \g
+        ..attr \class \start
+        ..attr \transform "translate(#{startCoords.join ','})"
+        ..append \path
+          ..attr \transform "rotate(28)"
+          ..attr \d symbol!
 
     @jumpsAssoc = {}
 
@@ -50,7 +61,7 @@ class ig.Sidebar
         coord.projected = projection coord
         individualJumps.push {coord, jump}
 
-    @jumps = @map.selectAll \g.jump .data @data .enter!append \g
+    @jumps = @drawing.selectAll \g.jump .data @data .enter!append \g
       ..attr \class \jump
       ..selectAll \circle .data (.coords) .enter!append \circle
         ..attr \cx -> it.projected.0

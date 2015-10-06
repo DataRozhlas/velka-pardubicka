@@ -50,6 +50,7 @@ lines = drawing.append \g .attr \class \lines
 d2 = data
   .slice!
   .sort (a, b) -> b.largest - a.largest
+
 backgroundG = lines.append \g
     ..attr \class \background
     ..selectAll \path .data d2.slice 0, 4 .enter!append \path
