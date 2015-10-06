@@ -70,9 +70,19 @@ drawing.append \g .attr \class "axis x"
       ..attr \text-anchor \middle
       ..attr \y 17
 
+currentDatum = null
+move = (dir) ->
+  currentIndex = data.indexOf currentDatum
+  index = currentIndex + dir
+  index %%= data.length
+  highlight data[index]
+
 sidebar = new ig.Sidebar container
+  ..previousRequested = -> move -1
+  ..nextRequested = -> move +1
 
 highlight = (datum) ->
+  currentDatum := datum
   foregroundG.selectAll \path .data [datum]
     ..enter!append \path
     ..attr \d -> line step it.yearsGrouped
@@ -89,5 +99,5 @@ highlight = (datum) ->
     ..attr \y -> -5 + yScale it.count
   sidebar.highlight datum
 
-console.log data
-highlight data.0
+highlight data.3
+

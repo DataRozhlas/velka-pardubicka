@@ -7,12 +7,26 @@ class ig.Sidebar
 
   highlight: (datum) ->
     jump = @jumpsAssoc[datum.number]
-    @heading.html jump.name
+    @heading.html "#{jump.number}. #{jump.name}"
     @content.html jump.comment
 
 
   drawTexts: ->
     @heading = @element.append \h2
+    @arrows = @element.append \div
+      ..attr \class \arrow
+      ..append \a
+        ..html "« předchozí"
+        ..attr \href \#
+        ..on \click ~>
+          d3.event.preventDefault!
+          @previousRequested!
+      ..append \a
+        ..html "následující »"
+        ..attr \href \#
+        ..on \click ~>
+          d3.event.preventDefault!
+          @nextRequested!
     @content = @element.append \p
 
   drawMap: ->

@@ -76,7 +76,7 @@ ig.getData = ->
       skipsAssoc[number]?addFall year, row
     row
 
-  skips.sort (a, b) -> b.fallsSum - a.fallsSum
+  # skips.sort (a, b) -> b.fallsSum - a.fallsSum
   for skip in skips
     skip.init!
   skips
