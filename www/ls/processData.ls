@@ -28,10 +28,11 @@ class Jump
       [lon, lat].map parseFloat
 
   findLargest: (data) ->
-    data
+    d2 = data
       .slice!
       .sort (a, b) -> b.rate - a.rate
-      .0.largest = 1
+    if d2.0.rate != d2.1.rate
+      d2.0.largest = 1
 
 
 ig.getData = ->
