@@ -1,5 +1,4 @@
-data = ig.getData!
-
+{skips: data, skipsAssoc} = ig.getData!
 container = d3.select ig.containers.base
 
 fullWidth = 630
@@ -80,6 +79,8 @@ move = (dir) ->
 sidebar = new ig.Sidebar container
   ..previousRequested = -> move -1
   ..nextRequested = -> move +1
+  ..numberRequested = (number) ->
+    highlight that if skipsAssoc[number]
 
 highlight = (datum) ->
   currentDatum := datum

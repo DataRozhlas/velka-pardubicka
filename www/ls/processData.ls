@@ -60,7 +60,8 @@ ig.getData = ->
     skip = new Skip prekazkaCislo
     skipsAssoc[prekazkaCislo] = skip
     skip
-  skips.push = skipsAssoc["10a"] = new Skip "10a"
+  sk10a = skipsAssoc["10a"] = new Skip "10a"
+  skips.splice 10, 0 sk10a
 
   d3.tsv.parse ig.data.data, (row) ->
     row.numbers = numbers = if row['překážka']
@@ -76,7 +77,6 @@ ig.getData = ->
       skipsAssoc[number]?addFall year, row
     row
 
-  # skips.sort (a, b) -> b.fallsSum - a.fallsSum
   for skip in skips
     skip.init!
-  skips
+  {skips, skipsAssoc}

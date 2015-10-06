@@ -42,7 +42,7 @@
     position absolute
     top 0px
     right 10px
-    height 600px
+    height 400px
     padding 10px 10px
     border-left 1px solid #c
     h2
@@ -60,6 +60,8 @@
           left 0px
         &:last-child
           right 0px
+        &:hover
+          text-decoration none
     svg
       position absolute
       bottom 20px
@@ -70,6 +72,13 @@
       circle
         stroke ColorBlue
         fill white
+        &.hover
+          fill lighten(ColorRed, 80%)
+          // stroke lighten(ColorRed, 50%)
+        &.active
+          fill ColorRed
+          stroke darken(ColorRed, 30%)
+
       g.voronoi
         path
           stroke none

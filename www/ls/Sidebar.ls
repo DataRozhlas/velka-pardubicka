@@ -9,7 +9,7 @@ class ig.Sidebar
     jump = @jumpsAssoc[datum.number]
     @heading.html "#{jump.number}. #{jump.name}"
     @content.html jump.comment
-
+    @jumps.classed \active -> it is jump
 
   drawTexts: ->
     @heading = @element.append \h2
@@ -66,6 +66,10 @@ class ig.Sidebar
     @vororoi = @map.append \g .attr \class \voronoi
       .selectAll \path .data voronoiPolygons .enter!append \path
         ..attr \d polygon
+        ..on \click ~> @numberRequested it.point.number
+        ..on \mouseover ({point}) ~>
+          @jumps.classed \hover -> it is point
+        ..on \mouseout ({point}) ~> @jumps.classed \hover no
 
 polygon = ->
   "M#{it.join "L"}Z"
