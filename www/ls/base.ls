@@ -1,8 +1,8 @@
 {jumps: data, jumpsAssoc} = ig.getData!
 container = d3.select ig.containers.base
 
-fullWidth = 630
-fullHeight = 440
+fullWidth = 660
+fullHeight = 464
 margin =
   top: 0.5
   bottom: 30
@@ -58,7 +58,7 @@ foregroundG = lines.append \g
 drawing.append \g .attr \class "axis x"
   ..attr \transform "translate(0, #{height + 5})"
   ..append \line
-    ..attr \x2 width
+    ..attr \x2 width + margin.right
   ..selectAll \g.year .data [1971 to 2014 by 4] .enter!append \g
     ..attr \class \year
     ..attr \transform -> "translate(#{xScale it}, 0)"
@@ -89,14 +89,13 @@ highlight = (datum) ->
     ..attr \d -> line step it.yearsGrouped
   foregroundG.selectAll \text .data datum.yearsGrouped
     ..enter!append \text
-      ..attr \text-anchor \middle
-      ..attr \x ->
-        if it.year == 2013
-          xScale it.year + 0.9
-        else
-          xScale it.year + 1.9
+      ..attr \text-anchor \start
+      ..attr \x -> 7 + xScale it.year
     ..text ->
-      "#{ig.utils.formatNumber it.rate, 2} %"
+      o = "#{ig.utils.formatNumber it.rate, 2} %"
+      if it.largest
+        o += " koní na této překážce spadlo"
+      o
     ..attr \y -> -5 + yScale it.rate
   sidebar.highlight datum
 

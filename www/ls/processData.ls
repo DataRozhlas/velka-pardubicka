@@ -17,6 +17,8 @@ class Jump
         @years[yearIndex + next]
       {year, rate, averagedFrom}
 
+    @findLargest @yearsGrouped
+
     @name = data.name
     @coords = []
     @addCooords data
@@ -24,6 +26,12 @@ class Jump
   addCooords: ({lon, lat}) ->
     @coords.push do
       [lon, lat].map parseFloat
+
+  findLargest: (data) ->
+    data
+      .slice!
+      .sort (a, b) -> b.rate - a.rate
+      .0.largest = 1
 
 
 ig.getData = ->
