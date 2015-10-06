@@ -33,6 +33,7 @@ class Jump
       .sort (a, b) -> b.rate - a.rate
     if d2.0.rate != d2.1.rate
       d2.0.largest = 1
+    @largest = d2.0.rate
 
 
 ig.getData = ->
