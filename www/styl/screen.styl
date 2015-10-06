@@ -42,7 +42,7 @@
     position absolute
     top 0px
     right 10px
-    height 400px
+    height 440px
     padding 10px 10px
     border-left 1px solid #c
     h2
@@ -69,13 +69,15 @@
 
       path
         stroke darken(ColorBlue, 50%)
-      circle
-        stroke ColorBlue
-        fill white
-        &.hover
+      g.jump
+        circle
+          stroke ColorBlue
+          fill white
+
+        &.hover circle
           fill lighten(ColorRed, 80%)
           // stroke lighten(ColorRed, 50%)
-        &.active
+        &.active circle
           fill ColorRed
           stroke darken(ColorRed, 30%)
 

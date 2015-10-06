@@ -11,7 +11,6 @@ externalStyles =
   ...
 
 externalData =
-  "data": "#__dirname/data/data.tsv"
   "map":  "#__dirname/data/trat.geojson"
   "jumps": "#__dirname/data/prekazky.csv"
 

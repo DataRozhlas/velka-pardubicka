@@ -1,12 +1,11 @@
 class ig.Sidebar
-  (@parentElement) ->
+  (@parentElement, @data) ->
     @element = @parentElement.append \div
       ..attr \class \sidebar
     @drawTexts!
     @drawMap!
 
-  highlight: (datum) ->
-    jump = @jumpsAssoc[datum.number]
+  highlight: (jump) ->
     @heading.html "#{jump.number}. #{jump.name}"
     @content.html jump.comment
     @jumps.classed \active -> it is jump
@@ -45,30 +44,32 @@ class ig.Sidebar
 
     @jumpsAssoc = {}
 
-    jumps = d3.csv.parse ig.data.jumps, (row) ~>
-      row.lat = parseFloat row.Y
-      row.lon = parseFloat row.X
-      row.coords = projection [row.lon, row.lat]
-      @jumpsAssoc[row.number] = row
-      row
+    individualJumps = []
+    for jump in @data
+      for coord in jump.coords
+        coord.projected = projection coord
+        individualJumps.push {coord, jump}
 
-    @jumps = @map.selectAll \circle .data jumps .enter!append \circle
-      ..attr \cx (.coords.0)
-      ..attr \cy (.coords.1)
-      ..attr \r 5
+    @jumps = @map.selectAll \g.jump .data @data .enter!append \g
+      ..attr \class \jump
+      ..selectAll \circle .data (.coords) .enter!append \circle
+        ..attr \cx -> it.projected.0
+        ..attr \cy -> it.projected.1
+        ..attr \r 5
     voronoi = d3.geom.voronoi!
-      ..x ~> it.coords.0
-      ..y ~> it.coords.1
+      ..x ~> it.coord.projected.0
+      ..y ~> it.coord.projected.1
       ..clipExtent [[0, 0], [width, height]]
-    voronoiPolygons = voronoi jumps
+
+    voronoiPolygons = voronoi individualJumps
       .filter -> it && it.length
 
     @vororoi = @map.append \g .attr \class \voronoi
       .selectAll \path .data voronoiPolygons .enter!append \path
         ..attr \d polygon
-        ..on \click ~> @numberRequested it.point.number
-        ..on \mouseover ({point}) ~>
-          @jumps.classed \hover -> it is point
+        ..on \click ~> @jumpRequested it.point.jump
+        ..on \mouseover ({{jump}:point}) ~>
+          @jumps.classed \hover -> it is jump
         ..on \mouseout ({point}) ~> @jumps.classed \hover no
 
 polygon = ->
