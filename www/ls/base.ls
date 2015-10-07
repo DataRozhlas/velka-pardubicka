@@ -2,7 +2,7 @@
 container = d3.select ig.containers.base
 
 fullWidth = 660
-fullHeight = 464
+fullHeight = 484
 margin =
   top: 0.5
   bottom: 30
